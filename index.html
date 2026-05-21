@@ -59,10 +59,15 @@ h1{
     margin-bottom:8px;
 }
 
-a{
+.copy-link{
     color:#4da6ff;
-    text-decoration:none;
+    cursor:pointer;
     word-break:break-all;
+    display:inline-block;
+}
+
+.copy-link:hover{
+    text-decoration:underline;
 }
 
 .tag{
@@ -72,6 +77,23 @@ a{
     border-radius:20px;
     font-size:12px;
     margin-top:10px;
+}
+
+.toast{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#222;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:10px;
+    opacity:0;
+    transition:0.3s;
+    pointer-events:none;
+}
+
+.toast.show{
+    opacity:1;
 }
 </style>
 </head>
@@ -94,32 +116,24 @@ a{
 
 </div>
 
+<div class="toast" id="toast">
+    Copied to clipboard
+</div>
+
 <script>
 
 const data = [
 
     {
-        name:"Win 10/11 user",
+        name:"New Win User",
         url:"start ms-cxh:localonly",
         tag:"CMD"
     },
 
     {
-        name:"PowerShell Script",
+        name:"All Activators",
         url:"https://example.com/script.ps1",
         tag:"Script"
-    },
-
-    {
-        name:"GitHub Repo",
-        url:"https://github.com",
-        tag:"Code"
-    },
-
-    {
-        name:"Download File",
-        url:"https://example.com/file.exe",
-        tag:"Download"
     }
 
 ];
@@ -140,9 +154,12 @@ function renderLinks(items){
                 ${item.name}
             </div>
 
-            <a href="${item.url}" target="_blank">
+            <div 
+                class="copy-link"
+                onclick="copyText('${item.url}')"
+            >
                 ${item.url}
-            </a>
+            </div>
 
             <div class="tag">
                 ${item.tag}
@@ -169,6 +186,20 @@ function filterLinks(){
     );
 
     renderLinks(filtered);
+
+}
+
+function copyText(text){
+
+    navigator.clipboard.writeText(text);
+
+    const toast = document.getElementById("toast");
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1500);
 
 }
 
