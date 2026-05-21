@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>run.eehaab.com</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0f0f0f;
+    color:white;
+    font-family:Arial,sans-serif;
+    padding:30px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:30px;
+    font-size:32px;
+}
+
+.search{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    margin-bottom:20px;
+    background:#1d1d1d;
+    color:white;
+    font-size:16px;
+}
+
+.card{
+    background:#1a1a1a;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:15px;
+    transition:0.3s;
+}
+
+.card:hover{
+    background:#242424;
+}
+
+.name{
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+a{
+    color:#4da6ff;
+    text-decoration:none;
+    word-break:break-all;
+}
+
+.tag{
+    display:inline-block;
+    background:#333;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>run.eehaab.com</h1>
+
+    <input 
+        type="text" 
+        class="search" 
+        id="search"
+        placeholder="Search..."
+        onkeyup="filterLinks()"
+    >
+
+    <div id="links"></div>
+
+</div>
+
+<script>
+
+const data = [
+
+    {
+        name:"Windows Tool",
+        url:"https://example.com/tool.zip",
+        tag:"Utility"
+    },
+
+    {
+        name:"PowerShell Script",
+        url:"https://example.com/script.ps1",
+        tag:"Script"
+    },
+
+    {
+        name:"GitHub Repo",
+        url:"https://github.com",
+        tag:"Code"
+    },
+
+    {
+        name:"Download File",
+        url:"https://example.com/file.exe",
+        tag:"Download"
+    }
+
+];
+
+function renderLinks(items){
+
+    const linksDiv = document.getElementById("links");
+
+    linksDiv.innerHTML = "";
+
+    items.forEach(item => {
+
+        linksDiv.innerHTML += `
+
+        <div class="card">
+
+            <div class="name">
+                ${item.name}
+            </div>
+
+            <a href="${item.url}" target="_blank">
+                ${item.url}
+            </a>
+
+            <div class="tag">
+                ${item.tag}
+            </div>
+
+        </div>
+
+        `;
+    });
+
+}
+
+function filterLinks(){
+
+    const search = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const filtered = data.filter(item =>
+        item.name.toLowerCase().includes(search) ||
+        item.tag.toLowerCase().includes(search) ||
+        item.url.toLowerCase().includes(search)
+    );
+
+    renderLinks(filtered);
+
+}
+
+renderLinks(data);
+
+</script>
+
+</body>
+</html>
